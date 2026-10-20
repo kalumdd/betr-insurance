@@ -20,6 +20,12 @@
     });
   }
 
+  // Header shadow once the page scrolls
+  if (header) {
+    var onScroll = function () { header.classList.toggle('scrolled', window.scrollY > 10); };
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  }
+
   // "Get Quote" dialog
   var dlg = document.getElementById('quote-dialog');
   document.querySelectorAll('[data-open-quote]').forEach(function (btn) {

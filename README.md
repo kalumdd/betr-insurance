@@ -6,7 +6,10 @@ Static HTML site for [betrinsurance.co.uk](https://betrinsurance.co.uk). It was 
 
 | Path | What it is |
 | --- | --- |
-| `index.html` | Home page (About, Insurance Solutions, Our Process, Contact sections) |
+| `index.html` | Home page |
+| `about/` | About us |
+| `insurance/` | Insurance overview (business & personal) |
+| `insurance/<service>/` | One page per service (15), each with FAQs and a quote form pre-set to that cover |
 | `contact/` | Contact page |
 | `privacy-policy/`, `terms-conditions/`, `complaints-policy/`, `cookies-policy/` | Policy pages |
 | `404.html` | Not-found page |
