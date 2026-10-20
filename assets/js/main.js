@@ -70,29 +70,25 @@
       btn.disabled = true; btn.textContent = 'Sending…';
       status.className = 'form-status';
       fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
-        .then(function (r) { return r.json(); })
-        .then(function (res) {
-          status.textContent = res.message;
-          status.className = 'form-status ' + (res.ok ? 'ok' : 'err');
-          if (res.ok) form.reset();
+        .then(function (r) {
+          return r.json().catch(function () { return {}; }).then(function (data) {
+            if (r.ok) {
+              status.textContent = 'Thank you for your message. We\u2019ll be in touch shortly.';
+              status.className = 'form-status ok';
+              form.reset();
+            } else {
+              var msg = data && data.errors && data.errors.length ? data.errors.map(function (e) { return e.message; }).join(' ') : '';
+              throw new Error(msg);
+            }
+          });
         })
-        .catch(function () {
-          status.textContent = 'Sorry, something went wrong. Please email quote@betrinsurance.co.uk or call 020 3051 6247.';
+        .catch(function (err) {
+          status.textContent = (err && err.message ? err.message + ' ' : 'Sorry, something went wrong. ') + 'You can also email quote@betrinsurance.co.uk or call 020 3051 6247.';
           status.className = 'form-status err';
         })
         .then(function () { btn.disabled = false; btn.innerHTML = label; });
     });
   });
-
-  // Show result after a no-JS submit (?sent=1 / ?sent=0)
-  var m = location.search.match(/sent=(\d)/);
-  if (m) {
-    var s = document.querySelector('form.enquiry .form-status');
-    if (s) {
-      s.textContent = m[1] === '1' ? 'Thank you for your message. We’ll be in touch shortly.' : 'Sorry, your message could not be sent. Please email quote@betrinsurance.co.uk.';
-      s.className = 'form-status ' + (m[1] === '1' ? 'ok' : 'err');
-    }
-  }
 
   var y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();

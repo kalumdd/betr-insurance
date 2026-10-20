@@ -30,16 +30,14 @@ It doesn't rely on any of the old WordPress folders.
    hPanel website dashboard > Clear cache (also purge the CDN if it's on).
    Then open https://betrinsurance.co.uk in a private window.
 
-5. MAKE THE CONTACT FORMS DELIVER EMAIL (one DNS change in GoDaddy)
-   The forms send to quote@betrinsurance.co.uk through Hostinger's mail server.
-   Because the domain's email runs on Microsoft 365, Hostinger has to be added to the SPF
-   record. Otherwise Outlook may send the enquiries to junk.
-   GoDaddy DNS > edit the TXT record "@" that starts with v=spf1 and change it to:
-
-     v=spf1 include:spf.protection.outlook.com include:_spf.mail.hostinger.com -all
-
-   Then send a test enquiry from the website and check it arrives (look in Junk too).
-   You can change the recipient address at the top of send.php.
+5. TEST THE CONTACT FORMS
+   All three forms (home page, contact page and the "Get Quote" popup) send through Formspree
+   (form ID xyekqwjl). Enquiries go to whichever email address that Formspree form is set to
+   deliver to, so make sure that's quote@betrinsurance.co.uk (or forwards there).
+   Send a test enquiry from the live site. Formspree may ask you to confirm the first
+   submission by email, and it's worth adding betrinsurance.co.uk under the form's
+   "Restrict to domain" setting in Formspree.
+   No DNS or email changes are needed.
 
 6. TIDY UP (optional, after a week or so)
    Once you're happy with the new site, you can delete _old_wordpress and the WordPress

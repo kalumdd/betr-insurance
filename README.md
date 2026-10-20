@@ -10,7 +10,6 @@ Static HTML site for [betrinsurance.co.uk](https://betrinsurance.co.uk). It was 
 | `contact/` | Contact page |
 | `privacy-policy/`, `terms-conditions/`, `complaints-policy/`, `cookies-policy/` | Policy pages |
 | `404.html` | Not-found page |
-| `send.php` | Contact / quote form handler (emails `quote@betrinsurance.co.uk` via PHP `mail()`) |
 | `assets/css/style.css` | All styles. Brand colours are at the top as CSS variables |
 | `assets/js/main.js` | Mobile menu, quote popup, form sending, small animations |
 | `assets/img/` | Logo, favicon and photos |
@@ -20,11 +19,9 @@ Static HTML site for [betrinsurance.co.uk](https://betrinsurance.co.uk). It was 
 
 Upload the repo contents to `public_html`, either by hand (see `README-UPLOAD.txt`) or with hPanel → Advanced → Git, pointing at this repo with the install path left blank (the site root).
 
-For the forms to deliver reliably, the domain's SPF record must include Hostinger:
+## Forms
 
-```
-v=spf1 include:spf.protection.outlook.com include:_spf.mail.hostinger.com -all
-```
+The home page form, the contact page form and the "Get Quote" popup all post to Formspree at `https://formspree.io/f/xyekqwjl`. `assets/js/main.js` sends them in the background and shows the success or error message on the page. The hidden `_gotcha` field is Formspree's spam trap. Each submission includes a `form` field saying which form it came from.
 
 ## Editing
 
