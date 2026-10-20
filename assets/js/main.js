@@ -38,16 +38,15 @@
     dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
   }
 
-  // Rotating hero word
+  // Rotating hero word. All words sit in the same spot, so the heading never changes size.
   var rot = document.querySelector('.rotator');
   if (rot && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    var words = (rot.getAttribute('data-words') || '').split(',');
+    var words = rot.querySelectorAll('.rw');
     var i = 0;
     setInterval(function () {
+      words[i].classList.remove('on'); words[i].setAttribute('aria-hidden', 'true');
       i = (i + 1) % words.length;
-      rot.classList.remove('swap'); void rot.offsetWidth;
-      rot.textContent = words[i];
-      rot.classList.add('swap');
+      words[i].classList.add('on'); words[i].removeAttribute('aria-hidden');
     }, 2600);
   }
 
