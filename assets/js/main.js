@@ -96,6 +96,22 @@
     });
   });
 
+  // Google map: only load when the visitor asks (no Google cookies until then)
+  document.querySelectorAll('.map-frame').forEach(function (frame) {
+    var btn = frame.querySelector('.map-load');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var f = document.createElement('iframe');
+      f.src = frame.getAttribute('data-map-src');
+      f.title = 'Map showing BETR Insurance Brokers, Great Portland Street, London';
+      f.loading = 'lazy';
+      f.referrerPolicy = 'no-referrer-when-downgrade';
+      f.allowFullscreen = true;
+      frame.innerHTML = '';
+      frame.appendChild(f);
+    });
+  });
+
   var y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
 })();
