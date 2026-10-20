@@ -3,9 +3,13 @@ Options -Indexes
 DirectoryIndex index.html index.php
 
 RewriteEngine On
-# Force HTTPS and the non-www address
-RewriteCond %{HTTPS} off [OR]
-RewriteCond %{HTTP_HOST} ^www\. [NC]
+# Force HTTPS (any host, so Hostinger's preview address keeps working)
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# www.betrinsurance.co.uk -> betrinsurance.co.uk
+RewriteCond %{HTTP_HOST} ^www\.betrinsurance\.co\.uk$ [NC]
 RewriteRule ^ https://betrinsurance.co.uk%{REQUEST_URI} [L,R=301]
 
 # Old WordPress addresses -> new pages
