@@ -1,0 +1,36 @@
+# BETR Insurance – static site
+Options -Indexes
+DirectoryIndex index.html index.php
+
+RewriteEngine On
+# Force HTTPS and the non-www address
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://betrinsurance.co.uk%{REQUEST_URI} [L,R=301]
+
+# Old WordPress addresses -> new pages
+RewriteRule ^contact$ /contact/ [L,R=301]
+RewriteRule ^privacy-policy$ /privacy-policy/ [L,R=301]
+RewriteRule ^terms-conditions$ /terms-conditions/ [L,R=301]
+RewriteRule ^complaints-policy$ /complaints-policy/ [L,R=301]
+RewriteRule ^cookies-policy$ /cookies-policy/ [L,R=301]
+RewriteRule ^(wp-admin|wp-login\.php)(.*)$ / [L,R=302]
+
+ErrorDocument 404 /404.html
+
+# Browser caching
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType image/png "access plus 6 months"
+  ExpiresByType image/jpeg "access plus 6 months"
+  ExpiresByType image/webp "access plus 6 months"
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# Don't serve repo/readme files
+<FilesMatch "^(README.*|\.git.*)$">
+  Require all denied
+</FilesMatch>
+RedirectMatch 404 /\.git
